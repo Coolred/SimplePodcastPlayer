@@ -83,11 +83,13 @@ class PlayerActivity : AppCompatActivity() {
             when (it) {
                 is PodcastVS.Podcast -> {
                     it.podcast.items?.apply {
+                        // Reverse List
                         itemList = this.sortedBy {
                             LocalDate.parse(it.pubDate, DateTimeFormatter.RFC_1123_DATE_TIME).toEpochDay()
                         }
+
                         idx = itemList.size - idx - 1
-                        updateEpisodesDate()
+                        updateEpisodeInfo()
                         setEpisodes()
                     }
                 }
@@ -106,7 +108,7 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateEpisodesDate() {
+    private fun updateEpisodeInfo() {
         val item = itemList[idx]
         binding.tvEpisodeTitle.text = item.title
         Glide.with(this@PlayerActivity).clear(binding.ivEpisodeCover)
@@ -283,19 +285,13 @@ class PlayerActivity : AppCompatActivity() {
             player?.currentWindowIndex?.apply {
                 idx = this
             }
-        }
-        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            if (playbackState == Player.STATE_ENDED) {
-                nextEpisode()
-            }
+            updateEpisodeInfo()
         }
     }
 
     private fun nextEpisode() {
         val hasNext = player?.hasNext() ?: false
         if (hasNext) {
-            idx += 1
-            updateEpisodesDate()
             player?.next()
         } else {
             Toast.makeText(this, getString(R.string.no_more_new_episodes), Toast.LENGTH_SHORT).show()
@@ -305,8 +301,6 @@ class PlayerActivity : AppCompatActivity() {
     private fun previousEpisode() {
         val hasPrevious = player?.hasPrevious() ?: false
         if (hasPrevious) {
-            idx -= 1
-            updateEpisodesDate()
             player?.previous()
         } else {
             Toast.makeText(this, getString(R.string.you_are_in_first_episode), Toast.LENGTH_SHORT).show()
