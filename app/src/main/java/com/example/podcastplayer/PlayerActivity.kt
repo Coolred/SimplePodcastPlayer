@@ -42,6 +42,7 @@ class PlayerActivity : AppCompatActivity() {
     private var isPlaying = false
     private var idx: Int = -1
     private lateinit var itemList : List<AutoMixItem>
+    private var isLoaded = false
 
     private var handler : Handler = Handler(Looper.getMainLooper())
 
@@ -68,6 +69,14 @@ class PlayerActivity : AppCompatActivity() {
         observeViewModel()
 
         viewModel.loadPodcast()
+
+        binding.playerContainer.ivPlay.setOnClickListener {
+            if (!isLoaded && !itemList.isNullOrEmpty()) {
+                setEpisodes()
+            } else {
+                setPlayPause(!isPlaying)
+            }
+        }
 
         binding.playerContainer.ivNext.setOnClickListener {
             nextEpisode()
@@ -164,6 +173,8 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun releasePlayer() {
         handler.removeCallbacksAndMessages(null)
+        setPlayPause(false)
+        isLoaded = false
         player?.run {
             idx = currentWindowIndex
             removeListener(eventListener)
@@ -173,6 +184,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun setEpisodes() {
+        isLoaded = true
         initDefaultTimeBar()
 
         val mediaSources = buildMediaSource()
@@ -182,9 +194,6 @@ class PlayerActivity : AppCompatActivity() {
             setMediaSources(mediaSources, idx, 0)
             prepare()
             setPlayPause(true)
-            binding.playerContainer.ivPlay.setOnClickListener {
-                setPlayPause(!isPlaying)
-            }
         }
     }
 
