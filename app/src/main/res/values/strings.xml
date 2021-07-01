@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PodcastPlayer</string>
+    <string name="image_description">N/A</string>
+    <string name="title_activity_episode">EpisodeActivity</string>
+    <string name="title_activity_player">PlayerActivity</string>
+    <string name="no_more_new_episodes">已是最後一集</string>
+    <string name="you_are_in_first_episode">已是第一集</string>
+</resources>

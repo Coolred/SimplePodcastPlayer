@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_margin="4dp"
+        android:orientation="horizontal"
+        android:background="@color/black">
+
+    <ImageView
+            android:id="@+id/ivEpisodeCover"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/image_description"/>
+    <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp">
+        <TextView
+                android:id="@+id/tvEpisodeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/white"
+                android:textAlignment="textStart"
+                android:textSize="14sp"
+                android:layout_alignParentTop="true"/>
+
+        <TextView
+                android:id="@+id/tvEpisodePubDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_alignParentBottom="true"
+                android:text=""
+                android:textColor="@color/white"
+                android:textAlignment="textStart"
+                android:textSize="12sp"
+        />
+    </RelativeLayout>
+</LinearLayout>
